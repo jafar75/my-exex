@@ -36,6 +36,7 @@ impl<Node: FullNodeComponents + Unpin> Future for InMemoryStateExEx<Node> {
         while let Some(notification) = ready!(this.ctx.notifications.try_next().poll_unpin(cx))? {
             match &notification {
                 ExExNotification::ChainCommitted { new } => {
+                    println!("chain committed from my-exex");
                     info!(committed_chain = ?new.range(), "Received commit");
                 }
                 ExExNotification::ChainReorged { old, new } => {
